@@ -14,6 +14,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 
 origins = [ "*" ]
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -23,10 +25,7 @@ app.add_middleware(
 )
 
 user.Base.metadata.create_all(bind=engine)
-
-
-app = FastAPI()
-    
+ 
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(chat.router, prefix="/chats", tags=["chats"])
 
