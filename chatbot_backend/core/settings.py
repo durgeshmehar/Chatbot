@@ -21,8 +21,8 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = None
 
     model_config = SettingsConfigDict(
-        env_file=f"{PROJECT_DIR}/.env", case_sensitive=False
+        env_file=f"{PROJECT_DIR}/Chatbot/chatbot_backend/.env", case_sensitive=False
     )
 
-settings: Settings = Settings()  # type: ignore
+settings: Settings = Settings()
 
