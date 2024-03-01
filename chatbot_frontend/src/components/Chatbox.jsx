@@ -2,6 +2,8 @@ import { FaArrowUp } from "react-icons/fa";
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+// import BACKEND_URL from "../components/constant"
+import { BACKEND_URL } from "@/components/constant";
 
 export default function Chatbox() {
   const Logo = "/images/chatbot.png";
@@ -36,7 +38,7 @@ export default function Chatbox() {
         token = userData.access_token;
         console.log("token passed :", token);
 
-        const response = await axios.get("/chats/chat", {
+        const response = await axios.get(`${BACKEND_URL}/chats/chat`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -70,7 +72,7 @@ export default function Chatbox() {
       token = userData.access_token;
 
       const sendData = async () => {
-        const response = await axios.post("/chats/chat",
+        const response = await axios.post(`${BACKEND_URL}/chats/chat`,
           {
             message: userEntermsg
           },

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+// import BACKEND_URL from "../../../components/constant";
+import { BACKEND_URL } from "@/components/constant";
 
 const loader = "/images/loader.gif";
 const Logo = "/images/chatbot.png";
@@ -58,7 +60,7 @@ function Login() {
       formData.append("password", password);
 
       try {
-        const { data } = await axios.post("/users/signin", formData, {
+        const { data } = await axios.post(`${BACKEND_URL}/users/signin`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

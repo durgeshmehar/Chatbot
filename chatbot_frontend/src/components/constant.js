@@ -1,0 +1,1 @@
+export const BACKEND_URL ="https://chatbot-26ro.onrender.com"
