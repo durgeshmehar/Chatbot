@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from api import users, chat
 from db.db_setup import engine
@@ -11,6 +12,15 @@ from fastapi.templating import Jinja2Templates
 from fastapi import FastAPI, Request
 
 from fastapi.responses import HTMLResponse
+
+origins = [ "*" ]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 user.Base.metadata.create_all(bind=engine)
 

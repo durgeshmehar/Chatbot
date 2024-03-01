@@ -9,6 +9,7 @@ import axios from "axios";
 
 const loader = "/images/loader.gif";
 const Logo =  "/images/chatbot.png";
+import { BACKEND_URL } from "@/components/constant";
 
 export default function page() {
 
@@ -58,7 +59,7 @@ export default function page() {
     if (handleValidation()) {
       const { email ,password } = values;
       try {
-        const { data } = await axios.post("/users/signup", {
+        const { data } = await axios.post(`${BACKEND_URL}/users/signup`, {
           first_name: "abc",
           last_name: "xyz",
           email : email,
