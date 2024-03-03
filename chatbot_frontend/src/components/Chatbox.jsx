@@ -2,8 +2,29 @@ import { FaArrowUp } from "react-icons/fa";
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 // import BACKEND_URL from "../components/constant"
 import { BACKEND_URL } from "@/components/constant";
+
+function CodeBlock({ node, inline, className, children, ...props }) {
+  const match = /language-(\w+)/.exec(className || '')
+  let lang = "javascript"
+  if (match) {
+    lang = match[1]
+  }
+  return !inline && match ? (
+    <SyntaxHighlighter language={lang} style={dracula} {...props}>
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  ) : (
+    <code className="p-[2px] bg-gray-400 rounded" {...props}>
+      {children}
+    </code>
+  )
+}
 
 export default function Chatbox() {
   const Logo = "/images/chatbot.png";
@@ -28,7 +49,7 @@ export default function Chatbox() {
     if (newRef.current) {
       newRef.current.scrollIntoView({ behavior: "smooth" })
     }
-  }, [newmsg , inputmsg.show ]);
+  }, [newmsg, inputmsg.show]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -109,7 +130,7 @@ export default function Chatbox() {
           </h1>
         </div>
       ) : (
-        <div className="chat-message px-[1vw] md:px-[8vw] mb-4 h-[80vh] md:h-[90vh] overflow-y-auto">
+        <div className="chat-message px-[1vw] md:px-[8vw] mb-4 max-h-[80vh] md:max-h-[90vh] overflow-y-auto">
           {messages && messages.length > 0 &&
             messages.map((msg, index) => {
               return (
@@ -147,8 +168,14 @@ export default function Chatbox() {
                       </h1>
                     </div>
 
-                    <div className=" p-3 rounded-full break-words  text-sm lg:text-base text-white">
-                      <p>{msg.ai_message}</p>
+                    <div className=" p-3 rounded-full break-words  text-sm lg:text-base leading-relaxed">
+                      <ReactMarkdown
+                        children={msg.ai_message}
+                        className="w-[100%] leading-relaxed"
+                        components={{
+                          code: CodeBlock
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -159,44 +186,44 @@ export default function Chatbox() {
             })}
 
           <div ref={newRef}>
-          {inputmsg.show && (
-            <div  className="flex flex-col m-4">
-              <div className="self-start md:self-end  w-[100%]  lg:w-[60%] ">
-                <div className="brand flex justify-start items-center gap-2">
-                  <img
-                    src={userLogo}
-                    alt="Logo Image"
-                    className="h-10 w-10 rounded-[50%]"
-                  />
-                  <h1 className="text-white text-lg font-semibold">
-                    You
-                  </h1>
+            {inputmsg.show && (
+              <div className="flex flex-col m-4">
+                <div className="self-start md:self-end  w-[100%]  lg:w-[60%] ">
+                  <div className="brand flex justify-start items-center gap-2">
+                    <img
+                      src={userLogo}
+                      alt="Logo Image"
+                      className="h-10 w-10 rounded-[50%]"
+                    />
+                    <h1 className="text-white text-lg font-semibold">
+                      You
+                    </h1>
+                  </div>
+                  <div className=" p-3 rounded-full break-words text-sm lg:text-base text-white">
+                    <p>{newmsg}</p>
+                  </div>
                 </div>
-                <div className=" p-3 rounded-full break-words text-sm lg:text-base text-white">
-                  <p>{newmsg}</p>
+
+                <div className="self-start  w-[100%]  lg:w-[60%]">
+
+                  <div className="brand flex justify-start items-center gap-2">
+                    <img
+                      src={Logo}
+                      alt="Logo Image"
+                      className="h-10 w-10 rounded-[50%]"
+                    />
+                    <h1 className="text-white text-lg font-semibold">
+                      Chatbot
+                    </h1>
+                  </div>
+
+                  <div className=" px-3 rounded-full break-words  text-sm lg:text-base text-white">
+                    <img src={dotLoader} className="ml-12 w-18 h-16 mt-0" />
+                  </div>
                 </div>
+
               </div>
-
-              <div className="self-start  w-[100%]  lg:w-[60%]">
-
-                <div className="brand flex justify-start items-center gap-2">
-                  <img
-                    src={Logo}
-                    alt="Logo Image"
-                    className="h-10 w-10 rounded-[50%]"
-                  />
-                  <h1 className="text-white text-lg font-semibold">
-                    Chatbot
-                  </h1>
-                </div>
-
-                <div className=" px-3 rounded-full break-words  text-sm lg:text-base text-white">
-                  <img src={dotLoader} className="ml-12 w-18 h-16 mt-0"/>
-                </div>
-              </div>
-
-            </div>
-          )}
+            )}
           </div>
 
         </div>

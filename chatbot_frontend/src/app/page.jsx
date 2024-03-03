@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  
-  
+
   useEffect(() => {
     if (!localStorage.getItem("chatbot-user")) {
       router.push("/auth/login");
