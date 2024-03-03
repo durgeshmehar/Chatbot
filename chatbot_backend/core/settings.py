@@ -5,6 +5,8 @@ from typing import Literal
 import os
 from pydantic import AnyHttpUrl, EmailStr, PostgresDsn, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
+load_dotenv()
 
 PROJECT_DIR = Path(__file__).parent.parent.parent
 
@@ -19,6 +21,7 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
     ALLOWED_HOSTS: list[str] = ["*"]
     OPENAI_API_KEY: str =  os.getenv("OPENAI_API_KEY") 
+    GOOGLE_API_KEY: str =  os.getenv("GOOGLE_API_KEY") 
 
     model_config = SettingsConfigDict(
         env_file=f"{PROJECT_DIR}/.env", case_sensitive=False
