@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from utils.file_handler import handle_file_upload
+from utils.query_handler import handle_query
 
-from api import users, chat
+from api import users, chat, pdf
 from db.db_setup import engine
 from db.models import user
 from core.settings import settings, PROJECT_DIR
@@ -25,7 +27,10 @@ app.add_middleware(
 )
 
 user.Base.metadata.create_all(bind=engine)
+
+
  
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(chat.router, prefix="/chats", tags=["chats"])
+app.include_router(pdf.router, prefix="/pdf", tags=["pdf"])
 

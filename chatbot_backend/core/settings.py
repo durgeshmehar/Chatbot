@@ -12,7 +12,6 @@ PROJECT_DIR = Path(__file__).parent.parent.parent
 
 
 class Settings(BaseSettings):
-    # CORE SETTINGS
     SECRET_KEY: str = os.getenv("SECRET_KEY") 
     ENVIRONMENT: Literal["DEV", "PYTEST", "STG", "PRD"] = "DEV"
     SECURITY_BCRYPT_ROUNDS: int = 12
