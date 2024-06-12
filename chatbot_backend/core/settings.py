@@ -12,15 +12,15 @@ PROJECT_DIR = Path(__file__).parent.parent.parent
 
 
 class Settings(BaseSettings):
-    SECRET_KEY: str
+    SECRET_KEY: str = os.getenv("SECRET_KEY") 
     ENVIRONMENT: Literal["DEV", "PYTEST", "STG", "PRD"] = "DEV"
     SECURITY_BCRYPT_ROUNDS: int = 12
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 11520  # 8 days
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 40320  # 28 days
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
-    ALLOWED_HOSTS: List[str] = ["*"]
-    OPENAI_API_KEY: str
-    GOOGLE_API_KEY: str
+    BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
+    ALLOWED_HOSTS: list[str] = ["*"]
+    OPENAI_API_KEY: str =  os.getenv("OPENAI_API_KEY") 
+    GOOGLE_API_KEY: str =  os.getenv("GOOGLE_API_KEY") 
 
     model_config = SettingsConfigDict(
         env_file=f"{PROJECT_DIR}/.env", case_sensitive=False
