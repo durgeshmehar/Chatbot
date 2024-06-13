@@ -47,7 +47,7 @@ async def get_chat(
     except Exception as e:
         print(e)
         return JSONResponse(status_code=500, content={"message": "Internal server error", "error": str(e)})
-    print(response_text)
+    print("Res :",response_text)
     chat = Chat(
         user_id=current_user.id,
         user_message=input_text.message,

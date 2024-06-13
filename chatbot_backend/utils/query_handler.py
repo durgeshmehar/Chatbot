@@ -3,13 +3,13 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from .client_assistant import client, assistant
 
-async def handle_query(question: str):
+async def handle_query(message: str):
     # Create a thread and attach the file to the message
     thread = client.beta.threads.create(
         messages=[
             {
                 "role": "user",
-                "content": question,
+                "content": message,
             }
         ]
     )
@@ -30,6 +30,6 @@ async def handle_query(question: str):
                 cited_file = client.files.retrieve(file_citation.file_id)
                 citations.append(f"[{index}] {cited_file.filename}")
 
-        return {"response": message_content.value}
+        return {"response":message_content.value}
     else:
         return {"response": f"No messages found : {messages}"}

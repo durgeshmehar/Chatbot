@@ -1,11 +1,12 @@
 import React,{useState, useEffect } from "react";
 const Logo = "/images/chatbot.png";
+import { FaTimes } from "react-icons/fa";
 
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
-export default function AppInfo() {
+export default function AppInfo({errorMsg , handleError}) {
   const [curruser , setCurruser] = useState(null)
   const router = useRouter();
 
@@ -26,7 +27,7 @@ export default function AppInfo() {
   }
 
   return (
-    <main  className="flex flex-col" >
+    <main  className="flex flex-col p-1" >
 
         <div className="w-full flex justify-between items-center px-8 md:px-4 p-4 py-2 ">
 
@@ -56,6 +57,13 @@ export default function AppInfo() {
             inquiries you may have.
           </p>
         </div>
+        {errorMsg? 
+        <div className="w-full box-border errors border p-2 relative mt-5 text-red-600">
+        <FaTimes className="absolute -top-2 right-0 w-6 h-6 p-1 bg-gray-300 text-red-800 border rounded-full border-red-800 hover:bg-gray-500 cursor-pointer" onClick={()=>{handleError(null)} } />
+          {errorMsg}
+        </div> : null}
+        
+
 
     </main>
   );
